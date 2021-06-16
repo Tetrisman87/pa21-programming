@@ -30,8 +30,8 @@ def user_defined_celebrationDance():
         # (255, 255, 255) = White
         # (0, 0, 0) = Black
         
-        #One full loop: 2.9 seconds
-        #Total Time: 29 Seconds
+        #One full loop: X seconds
+        #Total Time: X Seconds
         
         #Progress the loop
         variable_CelebrationTimer = variable_CelebrationTimer + 1
@@ -43,6 +43,7 @@ def user_defined_celebrationDance():
             chassis_ctrl.set_wheel_speed(variable_V - variable_V / variable_R,variable_V + variable_V / variable_R,variable_V - variable_V / variable_R,variable_V + variable_V / variable_R)
             time.sleep(0.5)
         
+        #Is there a way to make this whole sequence faster?
         # Red
         led_ctrl.set_bottom_led(rm_define.armor_bottom_front, 255, 0, 0, rm_define.effect_always_on)
         time.sleep(0.1)
@@ -323,21 +324,26 @@ def vision_recognized_pose_victory(msg):
     
     chassis_ctrl.stop()
     
+    tools.timer_ctrl(rmdefine.timer_start)
+    
     led_ctrl.set_bottom_led(rm_define.armor_bottom_front, 0, 127, 70, rm_define.effect_flash)
     
     while not (chassis_ctrl.is_impact()):
         
         chassis_ctrl.move(0)
         
-        for count in range(6):
+        for count in range(5):
         
             robotic_arm_ctrl.moveto(50, 200, wait_for_complete=True)
             robotic_arm_ctrl.moveto(-50, -200, wait_for_complete=True)
             robotic_arm_ctrl.moveto(200, 50, wait_for_complete=True)
             robotic_arm_ctrl.moveto(-200, -50, wait_for_complete=True)
         
+    tools.timer_ctrl(rmdefine.timer_stop)
     chassis_ctrl.stop()
-    chassis_ctrl.rotate_with_time(rm_define.clockwise, 0.5)
+    led_ctrl.set_bottom_led(rm_define.armor_bottom_front, 36, 103, 255, rm_define.effect_always_on)
+    chassis_ctrl.rotate_with_time(rm_define.clockwise, 1)
+    chassis_ctrl.translate_with_time(-180, tools.timer_current())
     
     
     
