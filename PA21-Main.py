@@ -244,7 +244,7 @@ def user_defined_initialStartup():
     #Set all LEDs to green to signify setup complete
     led_ctrl.set_bottom_led(rm_define.armor_bottom_all, 0, 255, 0, rm_define.effect_always_on)
     time.sleep(3)
-    rmexit()
+    #rmexit()
 
 #def ir_distance_1_ge_10_event(msg): -- Infared distance sensor not installed, causes program to break
 #    global variable_CelebrationTimer
